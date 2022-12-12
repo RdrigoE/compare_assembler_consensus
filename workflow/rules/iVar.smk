@@ -1,33 +1,33 @@
 rule align_pe:
     input:
-        reads_1="samples/{sample}/trimmed_reads/{sample}_1.trimmed.fastq.gz",
-        reads_2="samples/{sample}/trimmed_reads/{sample}_2.trimmed.fastq.gz",
+        reads_1="../data/{sample}_1.trimmed.fastq.gz",
+        reads_2="../data/{sample}_2.trimmed.fastq.gz",
     output:
         bam="align_samples/{sample}/iVar/snps.bam",
     conda:
         "../envs/ivar.yaml"
     shell:
         "mkdir align_samples/{wildcards.sample}/reference -p && "
-        "cp {REFERENCE} align_samples/{wildcards.sample}/reference/ && "
-        "bwa index align_samples/{wildcards.sample}/{REFERENCE} && "
-        "bwa mem align_samples/{wildcards.sample}/{REFERENCE} {input.reads_1} {input.reads_2} | "
-        "samtools view -u -T align_samples/{wildcards.sample}/{REFERENCE} -q 20 | "
-        "samtools sort --reference align_samples/{wildcards.sample}/{REFERENCE} > {output} && touch snps.vcf"
+        "cp {REFERENCE_FASTA} align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta && "
+        "bwa index align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta && "
+        "bwa mem align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta {input.reads_1} {input.reads_2} | "
+        "samtools view -u -T align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta -q 20 | "
+        "samtools sort --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta > {output} && touch snps.vcf"
 
 
 rule align_se:
     input:
-        reads_1="samples/{sample}/trimmed_reads/{sample}.trimmed.fastq.gz",
+        reads_1="../data/{sample}.trimmed.fastq.gz",
     output:
         "align_samples/{sample}/iVar/snps.bam",
     conda:
         "../envs/ivar.yaml"
     shell:
-        "bwa index align_samples/{wildcards.sample}/{REFERENCE} && "
+        "bwa index align_samples/{wildcards.sample}/{REFERENCE_FASTA} && "
 
-        "bwa mem align_samples/{wildcards.sample}/{REFERENCE} {input.reads_1} | "
-        "samtools view -u -T align_samples/{wildcards.sample}/{REFERENCE} -q 20 | "
-        "samtools sort --reference align_samples/{wildcards.sample}/{REFERENCE} > {output} && touch snps.vcf"
+        "bwa mem align_samples/{wildcards.sample}/{REFERENCE_FASTA} {input.reads_1} | "
+        "samtools view -u -T align_samples/{wildcards.sample}/{REFERENCE_FASTA} -q 20 | "
+        "samtools sort --reference align_samples/{wildcards.sample}/{REFERENCE_FASTA} > {output} && touch snps.vcf"
 
 
 ruleorder: align_pe > align_se
@@ -50,7 +50,7 @@ rule call_variant:
         "../envs/ivar.yaml"
     shell:
         "samtools mpileup -A -d 600000 -B -Q 0 {input.bam} | "
-        "ivar variants -p align_samples/{wildcards.sample}/snps -q 20 -t 0.51  align_samples/{wildcards.sample}/{REFERENCE}  reference/{REFERENCE_NAME}.gff3"
+        "ivar variants -p align_samples/{wildcards.sample}/snps -q 20 -t 0.51  align_samples/{wildcards.sample}/{REFERENCE_FASTA}  reference/{REFERENCE_NAME}.gff3"
 
 
 rule filter_variants:
@@ -78,7 +78,7 @@ rule generate_consensus:
         "snps.consensus",
     shell:
         "samtools mpileup -aa -A -Q 0 {input.bam} | ivar consensus -p align_samples/{wildcards.sample}/iVar/{params} -q 20 -t 0.51 -n N"
-        # "&& python3 utils/change_id_name.py {output.consensus} SARS_CoV_2"
+        # "&& python3 ../workflow/scripts/change_id_name.py {output.consensus} SARS_CoV_2"
 
 
 rule get_depth:
@@ -86,18 +86,26 @@ rule get_depth:
         i="align_samples/{sample}/iVar/snps.bam",
         consensus="align_samples/{sample}/iVar/snps.consensus.fa",
     output:
-        consensus="align_samples/{sample}/iVar/new_snps.consensus.fa",
         only_depth="align_samples/{sample}/iVar/snps.depth.gz",
         depth="align_samples/{sample}/iVar/snps.depth",
         ind="align_samples/{sample}/iVar/snps.depth.gz.tbi",
     conda:
-        "../envs/medaka_1_4_4.yaml"
+        "../envs/snippy.yaml"
     params:
         "-aa -q 20",
     shell:
         "samtools depth {params} {input.i} | bgzip -c > {output.only_depth} "
-        "&& tabix -p vcf {output.only_depth} && gunzip -c {output.only_depth}  > {output.depth} &&"
-        "python utils/split_consensus.py {input.consensus} {output.depth} {REFERENCE_GB} {output.consensus}"
+        "&& tabix -p vcf {output.only_depth} && gunzip -c {output.only_depth}  > {output.depth} "
+
+
+rule iVar_depth_1_2:
+    input:
+        consensus="align_samples/{sample}/iVar/snps.consensus.fa",
+        depth="align_samples/{sample}/iVar/snps.depth",
+    output:
+        consensus="align_samples/{sample}/iVar/new_snps.consensus.fa",
+    shell:
+        "python ../workflow/scripts/split_consensus.py {input.consensus} {input.depth} {REFERENCE_GB} {output.consensus}"
 
 
 rule iVar_depth_step_2:
@@ -106,7 +114,7 @@ rule iVar_depth_step_2:
     output:
         unzipped="align_samples/{sample}/iVar/{seg}.depth",
     shell:
-        "python utils/split_depth_file.py {input.zipped} {REFERENCE_GB}"
+        "python ../workflow/scripts/split_depth_file.py {input.zipped} {REFERENCE_GB}"
 
 
 rule create_align_file_iVar:
@@ -115,7 +123,7 @@ rule create_align_file_iVar:
     output:
         align_file=temp("align_samples/{sample}/iVar/iVar_align_{seg}.fasta"),
     shell:
-        "python utils/mask_consensus_by_deep.py align_samples/{wildcards.sample}/{REFERENCE} {input.first_consensus} {output.align_file} {wildcards.seg}"
+        "python ../workflow/scripts/mask_consensus_by_deep.py align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta {input.first_consensus} {output.align_file} {wildcards.seg}"
 
 
 rule align_mafft_iVar:
@@ -143,7 +151,7 @@ rule msa_masker_iVar:
     params:
         "--c " + str(software_parameters["msa_masker"]),
     shell:
-        "python software/msa_masker/msa_masker.py -i {input.align_file} -df {input.depth} -o {output} {params}"
+        "python ../workflow/scripts/msa_masker.py -i {input.align_file} -df {input.depth} -o {output} {params}"
 
 
 rule get_masked_consensus_iVar:
@@ -156,7 +164,7 @@ rule get_masked_consensus_iVar:
     output:
         final_consensus="align_samples/{sample}/iVar/pre_{sample}_consensus.fasta",
     shell:
-        "python utils/get_consensus_medaka.py '{input}' {output}"
+        "python ../workflow/scripts/get_consensus_medaka.py '{input}' {output}"
 
 
 rule mask_regions_consensus_iVar:
@@ -167,4 +175,4 @@ rule mask_regions_consensus_iVar:
     params:
         mask_regions_parameters(software_parameters),
     shell:
-        "python utils/mask_regions.py {input} {output} {params}"
+        "python ../workflow/scripts/mask_regions.py {input} {output} {params}"

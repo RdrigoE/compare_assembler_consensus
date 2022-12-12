@@ -1,3 +1,2 @@
 sample_name,fastq1,fastq2,tech
-influenza_01,influenza_01_R1_001,influenza_01_R2_001,illumina
-influenza_02,influenza_02_R1_001,,illumina
+demo_influenza_01,demo_influenza_01,demo_influenza_01,illumina
