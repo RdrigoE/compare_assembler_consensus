@@ -47,13 +47,13 @@ class Sequence:
                 num_equals += 1
             else:
                 count += 1
-                print(
-                    nucleotide_index,
-                    self.reference[nucleotide_index],
-                    self.sequence[nucleotide_index],
-                    count,
-                    sample,
-                )
+                # print(
+                #     nucleotide_index,
+                #     self.reference[nucleotide_index],
+                #     self.sequence[nucleotide_index],
+                #     count,
+                #     sample,
+                # )
                 if (
                     self.reference[nucleotide_index] in "ATCG"
                     and self.sequence[nucleotide_index] in "ATCG"
@@ -189,7 +189,7 @@ for sample in snakemake_seq:
         Ns,
     ) = analyse.get_match_nucleotides()
     if match_nucleotides != max(analyse.seq_len, analyse.ref_len):
-        print(sample, missmatched, missligned, Ns)
+        # print(sample, missmatched, missligned, Ns)
         to_align.append(sample)
         # print(sample)
         # print(

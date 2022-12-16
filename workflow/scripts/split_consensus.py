@@ -43,7 +43,7 @@ def split_consensus(consensus, depth, locus, output):
     count = 0
     for loc in locus:
         new_dic[loc] = [count, count + int(dic[loc])]
-        print(new_dic[loc])
+        # print(new_dic[loc])
         count += int(dic[loc])
 
     for loc in new_dic:

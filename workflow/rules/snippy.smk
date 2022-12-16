@@ -3,8 +3,8 @@
 
 rule snippy_pe:
     input:
-        reads_1="../data/{sample}_1.trimmed.fastq.gz",
-        reads_2="../data/{sample}_2.trimmed.fastq.gz",
+        reads_1="samples/{sample}/trimmed_reads/{sample}_1.trimmed.fastq.gz",
+        reads_2="samples/{sample}/trimmed_reads/{sample}_2.trimmed.fastq.gz",
     output:
         depth="align_samples/{sample}/snippy/snps.depth.gz",
         bam="align_samples/{sample}/snippy/snps.bam",
@@ -24,7 +24,7 @@ rule snippy_pe:
 
 rule snippy_se:
     input:
-        read="../data/{sample}.trimmed.fastq.gz",
+        read="samples/{sample}/trimmed_reads/{sample}.trimmed.fastq.gz",
     output:
         depth="align_samples/{sample}/snippy/snps.depth.gz",
         bam="align_samples/{sample}/snippy/snps.bam",

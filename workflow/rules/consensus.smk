@@ -2,6 +2,8 @@ rule compare_consensus:
     input:
         consensus_1="{project}/snippy_consensus.fasta",
         consensus_2="{project}/iVar_consensus.fasta",
+    conda:
+        "../envs/analyse.yaml"
     output:
         "{project}/compare_consensus.csv",
     shell:

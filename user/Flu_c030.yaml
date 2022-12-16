@@ -1,0 +1,6 @@
+project_name: flu_30
+fasta_reference: ../user/references/A_H3N2_A_Victoria_361_2011.fasta
+gb_reference: ../user/references/A_H3N2_A_Victoria_361_2011.gbk
+primers: ../user/primers/mpox.bed
+folder: 30_coverage_flu
+coverage: 30

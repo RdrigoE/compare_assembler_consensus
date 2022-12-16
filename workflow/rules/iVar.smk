@@ -1,9 +1,9 @@
 rule align_pe:
     input:
-        reads_1="../data/{sample}_1.trimmed.fastq.gz",
-        reads_2="../data/{sample}_2.trimmed.fastq.gz",
+        reads_1="samples/{sample}/trimmed_reads/{sample}_1.trimmed.fastq.gz",
+        reads_2="samples/{sample}/trimmed_reads/{sample}_2.trimmed.fastq.gz",
     output:
-        bam="align_samples/{sample}/iVar/snps.bam",
+        bam="align_samples/{sample}/iVar/pre_snps.bam",
     conda:
         "../envs/ivar.yaml"
     shell:
@@ -12,14 +12,14 @@ rule align_pe:
         "bwa index align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta && "
         "bwa mem align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta {input.reads_1} {input.reads_2} | "
         "samtools view -u -T align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta -q 20 | "
-        "samtools sort --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta > {output} && touch snps.vcf"
+        "samtools sort --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta > {output}"
 
 
 rule align_se:
     input:
-        reads_1="../data/{sample}.trimmed.fastq.gz",
+        reads_1="samples/{sample}/trimmed_reads/{sample}.trimmed.fastq.gz",
     output:
-        "align_samples/{sample}/iVar/snps.bam",
+        "align_samples/{sample}/iVar/pre_snps.bam",
     conda:
         "../envs/ivar.yaml"
     shell:
@@ -27,7 +27,7 @@ rule align_se:
 
         "bwa mem align_samples/{wildcards.sample}/{REFERENCE_FASTA} {input.reads_1} | "
         "samtools view -u -T align_samples/{wildcards.sample}/{REFERENCE_FASTA} -q 20 | "
-        "samtools sort --reference align_samples/{wildcards.sample}/{REFERENCE_FASTA} > {output} && touch snps.vcf"
+        "samtools sort --reference align_samples/{wildcards.sample}/{REFERENCE_FASTA} > {output}"
 
 
 ruleorder: align_pe > align_se
@@ -40,17 +40,31 @@ ruleorder: align_pe > align_se
 #     shell:"perl software/bp_genbank2gff3.pl {input}"
 
 
+rule primers_bam:
+    input:
+        pre_snps="align_samples/{sample}/iVar/pre_snps.bam",
+    output:
+        snps="align_samples/{sample}/iVar/snps.bam",
+    conda:
+        "../envs/ivar.yaml"
+    params:
+        "align_samples/{wildcards.sample}/iVar/snps",
+    shell:
+        "samtools sort -o {input.pre_snps}.sorted {input.pre_snps} && "
+        "ivar trim -i {input.pre_snps}.sorted -b {PRIMERS} -p {output} -m 35 -e -s 5 &&"
+        " samtools sort -o {output} {output} "
+
+
 rule call_variant:
     input:
         bam="align_samples/{sample}/iVar/snps.bam",
-        gff="reference/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.gff3",
     output:
         vcf_file="align_samples/{sample}/iVar/snps.tsv",
     conda:
         "../envs/ivar.yaml"
     shell:
         "samtools mpileup -A -d 600000 -B -Q 0 {input.bam} | "
-        "ivar variants -p align_samples/{wildcards.sample}/snps -q 20 -t 0.51  align_samples/{wildcards.sample}/{REFERENCE_FASTA}  reference/{REFERENCE_NAME}.gff3"
+        "ivar variants -p align_samples/{wildcards.sample}/iVar/snps -q 20 -t 0.51  align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta "
 
 
 rule filter_variants:
@@ -58,13 +72,13 @@ rule filter_variants:
         bam="align_samples/{sample}/iVar/snps.bam",
         vcf_file="align_samples/{sample}/iVar/snps.tsv",
     output:
-        vcf_file="align_samples/{sample}/iVar/snps_filtered.tsv",
+        "align_samples/{sample}/iVar/snps_filtered.tsv",
     conda:
         "../envs/ivar.yaml"
     params:
         "snps_filtered",
     shell:
-        "ivar filtervariants -t 0.51 -p {params} {output.vcf_file}"
+        "ivar filtervariants -p align_samples/{wildcards.sample}/iVar/snps_filtered -t 0.51 -f {input.vcf_file}"
 
 
 rule generate_consensus:
@@ -78,7 +92,6 @@ rule generate_consensus:
         "snps.consensus",
     shell:
         "samtools mpileup -aa -A -Q 0 {input.bam} | ivar consensus -p align_samples/{wildcards.sample}/iVar/{params} -q 20 -t 0.51 -n N"
-        # "&& python3 ../workflow/scripts/change_id_name.py {output.consensus} SARS_CoV_2"
 
 
 rule get_depth:

@@ -19,7 +19,6 @@ def split_depth_file(file_path, reference_gb):
     path = file_path[:last_pos]
     reference_list = get_locus(reference_gb)
     for name in reference_list:
-        # if not exists(f"{path}{name}.depth"):
         with open(file_path, "r", encoding="utf-8") as handle_depth:
             new_file = []
             for line in handle_depth.readlines():
