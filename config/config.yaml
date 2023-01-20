@@ -8,7 +8,7 @@ locus:
 - '6'
 - '7'
 - '8'
-project: flu_100
+project: flu_100_alt
 proteins:
 - PB2
 - PB1

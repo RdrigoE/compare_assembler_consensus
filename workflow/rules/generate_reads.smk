@@ -5,7 +5,7 @@ rule generate_reads:
     conda:
         "../envs/art.yaml"
     shell:
-        "art_illumina -p -i {REFERENCE_FASTA}  -l 150 -f {COVERAGE} -m 290 -s 140  -o ../user/reads/{FOLDER_NAME}/{wildcards.sample}_"
+        "art_illumina -p -i {REFERENCE_TO_CREATE}  -l 150 -f {COVERAGE} -m 290 -s 140  -o ../user/reads/{FOLDER_NAME}/{wildcards.sample}_"
 
 
 rule gzip_reads:

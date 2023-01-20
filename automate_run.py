@@ -1,6 +1,6 @@
 import os
 
-species: list[str] = ["Flu"]  # ["MPOX", "SARS_CoV_2", "Flu"]
+species: list[str] = ["MPOX", "SARS_CoV_2", "Flu"]
 coverage: list[str] = ["010", "030", "100"]
 
 holder: str = "Flu_c100"

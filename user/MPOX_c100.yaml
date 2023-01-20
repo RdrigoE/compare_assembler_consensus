@@ -1,7 +1,8 @@
-project_name: mpx_100
+project_name: mpx_100_alt
 fasta_reference: ../user/references/monkeypox_MT903344_MPXV_UK_P2_wo_NN.fasta
 gb_reference: ../user/references/monkeypox_MT903344_MPXV_UK_P2_wo_NN.gb
 primers: ../user/primers/mpox.bed
-folder: 100_coverage
+folder: 100_coverage_alt
 coverage: 100
 gff_reference: ../user/references/monkeypox_MT903344_MPXV_UK_P2_wo_NN.gff3
+create_fastq_ref: ../user/alt_ref/MPX_REF_ALT.fasta
