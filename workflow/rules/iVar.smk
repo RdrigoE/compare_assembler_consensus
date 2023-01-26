@@ -88,8 +88,6 @@ rule iVar_depth_1_2:
         depth="align_samples/{sample}/iVar/snps.depth",
     output:
         consensus="align_samples/{sample}/iVar/new_snps.consensus.fa",
-    conda:
-        "../envs/base.yaml"
     log:
         "logs/align_samples/{sample}/iVar/depth_1_2.log",
     shell:
@@ -101,8 +99,6 @@ rule iVar_depth_step_2:
         zipped="align_samples/{sample}/iVar/snps.depth",
     output:
         unzipped="align_samples/{sample}/iVar/{seg}.depth",
-    conda:
-        "../envs/base.yaml"
     log:
         "logs/align_samples/{sample}/iVar/depth_step_2/{seg}.log",
     shell:
@@ -114,8 +110,6 @@ rule create_align_file_iVar:
         first_consensus="align_samples/{sample}/iVar/new_snps.consensus.fa",
     output:
         align_file=temp("align_samples/{sample}/iVar/iVar_align_{seg}.fasta"),
-    conda:
-        "../envs/base.yaml"
     log:
         "logs/align_samples/{sample}/iVar/create_align_file/{seg}.log",
     shell:
@@ -163,8 +157,6 @@ rule get_masked_consensus_iVar:
         ),
     output:
         final_consensus="align_samples/{sample}/iVar/pre_{sample}_consensus.fasta",
-    conda:
-        "../envs/base.yaml"
     log:
         "logs/align_samples/{sample}/iVar/get_masked_consensus.log",
     shell:
@@ -178,13 +170,11 @@ rule mask_regions_consensus_iVar:
     output:
         final_consensus="align_samples/{sample}/iVar/{sample}_consensus.fasta",
         vcf_file="align_samples/{sample}/iVar/snps.vcf",
-    conda:
-        "../envs/base.yaml"
     params:
         mask_regions_parameters(software_parameters),
     log:
         "logs/align_samples/{sample}/iVar/mask_regions_consensus.log",
     shell:
-        "python {scripts_directory}mask_regions.py {input.consensus} {output.final_consensus} {params} "
+        "python ../workflow/scripts/mask_regions.py {input.consensus} {output.final_consensus} {params} "
         " && "
-        "python {scripts_directory}convert_vcf.py {input.tsv_file} {output.vcf_file} "
+        "python ../workflow/scripts/convert_vcf.py {input.tsv_file} {output.vcf_file} "

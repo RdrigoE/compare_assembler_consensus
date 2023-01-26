@@ -15,7 +15,7 @@ workdir: "results/"
 
 software_parameters = read_yaml("../user/parameters.yaml")
 
-sample_data: Data = Data("../user/Flu_c100.csv")
+sample_data: Data = Data("../user/SARS_CoV_2_500snps.csv")
 (
     paired_illumina,
     single_illumina,
@@ -25,7 +25,7 @@ sample_data: Data = Data("../user/Flu_c100.csv")
 
 concatenated_illumina = list({**paired_illumina, **single_illumina}.keys())
 
-user_metadata = read_yaml("../user/Flu_c100.yaml")
+user_metadata = read_yaml("../user/SARS_CoV_2_500snps.yaml")
 
 
 PROJECT_NAME = user_metadata["project_name"]
@@ -54,7 +54,6 @@ config_user = {
 COVERAGE = user_metadata["coverage"]
 PROJECT_NAME = config_user["project"]
 FOLDER_NAME = user_metadata["folder"]
-# REFERENCE_GFF = user_metadata["gff_reference"]
 write_yaml("../config/config.yaml", config_user)
 
 
@@ -86,8 +85,57 @@ include: "rules/getCoverage.smk"
 include: "rules/generate_reads.smk"
 
 
+include: "rules/generate_alt_references.smk"
+
+
+include: "rules/snpeff.smk"
+
+
+include: "rules/freebayes.smk"
+
+
+include: "rules/variants.smk"
+
+
 rule all:
     input:
+        expand(
+            "{project}/validated_variants_{illumina_genome_assembly_software}.csv",
+            project=PROJECT_NAME,
+            illumina_genome_assembly_software=ASSEMBLER,
+        ),
+        expand(
+            "{project}/validated_minor_iSNVs_{illumina_genome_assembly_software}.csv",
+            project=PROJECT_NAME,
+            illumina_genome_assembly_software=ASSEMBLER,
+        ),
+        expand(
+            "{project}/validated_minor_iSNVs_inc_indels_{illumina_genome_assembly_software}.csv",
+            project=PROJECT_NAME,
+            illumina_genome_assembly_software=ASSEMBLER,
+        ),
+        expand(
+            "{project}/proportions_iSNVs_graph_{illumina_genome_assembly_software}.csv",
+            project=PROJECT_NAME,
+            illumina_genome_assembly_software=ASSEMBLER,
+        ),
+        expand(
+            "align_samples/{sample}/{illumina_genome_assembly_software}/sample__{sample}_freebayes_snpeff.vcf",
+            illumina_genome_assembly_software=ASSEMBLER,
+            sample=paired_illumina.keys(),
+        ),
+        expand(
+            "align_samples/{sample}/{illumina_genome_assembly_software}/sample__{sample}_freebayes.vcf",
+            illumina_genome_assembly_software=ASSEMBLER,
+            sample=paired_illumina.keys(),
+        ),
+        expand("align_samples/{sample}/snp_ready.txt", sample=paired_illumina.keys()),
+        expand(
+            "align_samples/{sample}/{illumina_genome_assembly_software}/sample__{sample}_snpeff.vcf",
+            illumina_genome_assembly_software=ASSEMBLER,
+            sample=paired_illumina.keys(),
+        ),
+        expand("../user/alt_ref/{sample}.fasta", sample=concatenated_illumina),
         expand(
             "../user/reads/{folder}/{sample}_{dir}.fastq.gz",
             folder=FOLDER_NAME,

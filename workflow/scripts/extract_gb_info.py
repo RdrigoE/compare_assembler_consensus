@@ -63,7 +63,9 @@ def get_locus_and_genes(genbank_file: str) -> dict[str, list[str]]:
                             feat.qualifiers.get("locus_tag")[0]
                         )
                     else:
-                        locus_gene[record.name].append(feat.qualifiers["gene"][0])
+                        locus_gene[record.name].append(
+                            feat.qualifiers["gene"][0]
+                        )
 
     return locus_gene
 
@@ -105,11 +107,17 @@ def get_positions_gb(genbank_file: str) -> list:
                 if features.type == "CDS":
                     if features.qualifiers.get("gene", None) is None:
                         positions.append(
-                            [features.qualifiers.get("locus_tag")[0], features.location]
+                            [
+                                features.qualifiers.get("locus_tag")[0],
+                                features.location,
+                            ]
                         )
                     else:
                         positions.append(
-                            [features.qualifiers.get("gene")[0], features.location]
+                            [
+                                features.qualifiers.get("gene")[0],
+                                features.location,
+                            ]
                         )
     positions_clean: list = []
 
@@ -143,7 +151,9 @@ def get_genes(genbank_file):
     return genes
 
 
-def get_identification_version(segments: list, reference_gb: str) -> tuple[str, str]:
+def get_identification_version(
+    segments: list, reference_gb: str
+) -> tuple[str, str]:
     """
     The get_identification_version function takes a list of SeqRecord objects and the path to a reference GenBank file.
     It returns the identification and version numbers for that GenBank file.

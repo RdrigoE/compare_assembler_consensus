@@ -1,13 +1,13 @@
 import os
 
-species: list[str] = ["MPOX", "SARS_CoV_2", "Flu"]
-coverage: list[str] = ["010", "030", "100"]
+species: list[str] = ["SARS_CoV_2"]
+snps = [10, 20, 40, 60, 80, 100, 150, 200, 300, 400, 500]
 
-holder: str = "Flu_c100"
+holder: str = "SARS_CoV_2_500"
 
 for s in species:
-    for c in coverage:
-        print(f"Replacing string: {s}_c{c}")
-        os.system(f"sed -i 's/{holder}/{s}_c{c}/' workflow/Snakefile")
-        os.system("snakemake -c 12 --use-conda --ri")
-        holder = f"{s}_c{c}"
+    for snp in snps:
+        print(f"Replacing string: {s}_{snp}snps")
+        os.system(f"sed -i 's/{holder}/{s}_{snp}/' workflow/Snakefile")
+        os.system("snakemake -c 12 --use-conda")
+        holder = f"{s}_{snp}"
