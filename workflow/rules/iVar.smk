@@ -60,7 +60,7 @@ rule generate_consensus:
     log:
         "logs/align_samples/{sample}/iVar/generate_consensus.log",
     shell:
-        "samtools mpileup -aa -A -Q 0 {input.bam} --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta | ivar consensus -p align_samples/{wildcards.sample}/iVar/{params} -q 20 -t 0.51 -n N"
+        "samtools mpileup -aa -A -Q 0 {input.bam} --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta | ivar consensus -p align_samples/{wildcards.sample}/iVar/{params} -q 20 -t 0.51 -n N "
 
 
 rule get_depth:

@@ -15,7 +15,7 @@ workdir: "results/"
 
 software_parameters = read_yaml("../user/parameters.yaml")
 
-sample_data: Data = Data("../user/SARS_CoV_2_500snps.csv")
+sample_data: Data = Data("../user/SARS_CoV_2_80snps.csv")
 (
     paired_illumina,
     single_illumina,
@@ -25,7 +25,7 @@ sample_data: Data = Data("../user/SARS_CoV_2_500snps.csv")
 
 concatenated_illumina = list({**paired_illumina, **single_illumina}.keys())
 
-user_metadata = read_yaml("../user/SARS_CoV_2_500snps.yaml")
+user_metadata = read_yaml("../user/SARS_CoV_2_80snps.yaml")
 
 
 PROJECT_NAME = user_metadata["project_name"]

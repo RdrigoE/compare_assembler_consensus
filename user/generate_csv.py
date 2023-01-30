@@ -1,11 +1,12 @@
 import csv
+import yaml
 
 
-def make_file(coverage, species):
-    output = f"{species}_{coverage}snps.csv"
+def make_file(identity, species):
+    output = f"{species}_{identity}identity.csv"
     header = ["sample_name", "fastq1", "fastq2", "tech"]
     for sample in range(1, 31):
-        sample_name = f"sample_{sample}__{coverage}snps_{species}"
+        sample_name = f"sample_{sample}__{identity}identity_{species}"
         sample_1 = f"{sample_name}_1.fastq.gz"
         sample_2 = f"{sample_name}_2.fastq.gz"
         with open(output, "a") as csv_handler:
@@ -13,9 +14,6 @@ def make_file(coverage, species):
             if sample == 1:
                 writer.writerow(header)
             writer.writerow([sample_name, sample_1, sample_2, "illumina"])
-
-
-import yaml
 
 
 def write_yaml(yaml_file_path: str, dump_dict: dict) -> None:
@@ -31,9 +29,9 @@ def write_yaml(yaml_file_path: str, dump_dict: dict) -> None:
         yaml.dump(dump_dict, file)
 
 
-def make_yaml(snps, species):
+def make_yaml(identity, species):
     dict = {}
-    dict["project_name"] = f"{species}_{snps}snps"
+    dict["project_name"] = f"{species}_{identity}identity"
     dict[
         "fasta_reference"
     ] = "../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.fasta"
@@ -41,14 +39,18 @@ def make_yaml(snps, species):
         "gb_reference"
     ] = "../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.gbk"
     dict["primers"] = "../user/primers/sars_cov_2.bed"
-    dict["folder"] = f"{species}_{snps}snps"
+    dict["folder"] = f"{species}_{identity}identity"
     dict["coverage"] = 100
-    dict["create_fastq_ref"] = f"../user/alt_ref/{species}_{snps}snps.fasta"
-    write_yaml(f"{species}_{snps}snps.yaml", dict)
+    dict[
+        "create_fastq_ref"
+    ] = f"../user/alt_ref/{species}_{identity}identity.fasta"
+    write_yaml(f"{species}_{identity}identity.yaml", dict)
 
 
 if __name__ == "__main__":
-    snps = [10, 20, 40, 60, 80, 100, 150, 200, 300, 400, 500]
+    # snps = [99, 98, 97, 96, 95, 93, 91, 89, 85, 80, 70]
+    snps = [84, 79, 70]
+
     species = ["SARS_CoV_2"]
     for snp in snps:
         for spec in species:

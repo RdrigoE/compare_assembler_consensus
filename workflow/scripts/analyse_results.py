@@ -43,7 +43,10 @@ class Sequence:
         diff_dic = start_dic()
         count = 0
         for nucleotide_index in range(max_length):
-            if self.reference[nucleotide_index] == self.sequence[nucleotide_index]:
+            if (
+                self.reference[nucleotide_index]
+                == self.sequence[nucleotide_index]
+            ):
                 num_equals += 1
             else:
                 count += 1
@@ -75,11 +78,12 @@ class Sequence:
                     and self.sequence[nucleotide_index] in "AGTC-"
                 ):
                     Ns += 1
-
+                print(
+                    f"{nucleotide_index} =====> reference = {self.reference[nucleotide_index]} > snakemake = {self.sequence[nucleotide_index]}"
+                )
                 diff_dic[
                     f"{self.reference[nucleotide_index]}>{self.sequence[nucleotide_index]}"
                 ] += 1
-                # print(f"{nucleotide_index} =====> reference = {self.reference[nucleotide_index]} > snakemake = {self.sequence[nucleotide_index]}")
 
         return num_equals, diff_dic, missmatched, missligned, Ns
 
@@ -222,7 +226,9 @@ for sample in snakemake_obj:
         )
         aligned_file_handle = open(aligned_file)
         aligned_file_records = list(SeqIO.parse(aligned_file_handle, "fasta"))
-        analyse = Sequence(aligned_file_records[0].seq, aligned_file_records[1].seq)
+        analyse = Sequence(
+            aligned_file_records[0].seq, aligned_file_records[1].seq
+        )
         (
             match_nucleotides,
             diff,
