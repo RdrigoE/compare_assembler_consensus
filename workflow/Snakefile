@@ -64,36 +64,19 @@ if PRIMERS:
 
     include: "rules/iVar.smk"
 
-
 else:
 
     include: "rules/iVar_noPrimer.smk"
 
 
 include: "rules/consensus.smk"
-
-
 include: "rules/gather_consensus.smk"
-
-
 include: "rules/trimmomatic.smk"
-
-
 include: "rules/getCoverage.smk"
-
-
 include: "rules/generate_reads.smk"
-
-
 include: "rules/generate_alt_references.smk"
-
-
 include: "rules/snpeff.smk"
-
-
 include: "rules/freebayes.smk"
-
-
 include: "rules/variants.smk"
 
 
@@ -135,13 +118,13 @@ rule all:
             illumina_genome_assembly_software=ASSEMBLER,
             sample=paired_illumina.keys(),
         ),
-        expand("../user/alt_ref/{sample}.fasta", sample=concatenated_illumina),
-        expand(
-            "../user/reads/{folder}/{sample}_{dir}.fastq.gz",
-            folder=FOLDER_NAME,
-            sample=concatenated_illumina,
-            dir=["1", "2"],
-        ),
+        # expand("../user/alt_ref/{sample}.fasta", sample=concatenated_illumina),
+        # expand(
+        #     "../user/reads/{folder}/{sample}_{dir}.fastq.gz",
+        #     folder=FOLDER_NAME,
+        #     sample=concatenated_illumina,
+        #     dir=["1", "2"],
+        # ),
         expand(
             "align_samples/{sample}/{illumina_genome_assembly_software}/{sample}_consensus.fasta",
             illumina_genome_assembly_software=ASSEMBLER,

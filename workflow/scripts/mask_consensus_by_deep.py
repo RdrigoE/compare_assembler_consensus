@@ -18,7 +18,6 @@ with open(reference_fasta, "r", encoding="utf-8") as handle_fasta:
             record.id = record_id + "_ref"
             # delete descriptions
             vect_out_fasta_to_align.append(record)
-            print(record.id)
             vect_out_fasta_to_align.append(dt_consensus[record_id])
             with open(output_file, "w", encoding="utf-8") as handle_fasta_out_align:
                 SeqIO.write(vect_out_fasta_to_align, handle_fasta_out_align, "fasta")
