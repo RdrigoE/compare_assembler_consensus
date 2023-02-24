@@ -15,7 +15,7 @@ workdir: "results/"
 
 software_parameters = read_yaml("../user/parameters.yaml")
 
-sample_data: Data = Data("../user/SARS_CoV_2_80snps.csv")
+sample_data: Data = Data("../user/SARS_CoV_2_70identity.csv")
 (
     paired_illumina,
     single_illumina,
@@ -25,7 +25,7 @@ sample_data: Data = Data("../user/SARS_CoV_2_80snps.csv")
 
 concatenated_illumina = list({**paired_illumina, **single_illumina}.keys())
 
-user_metadata = read_yaml("../user/SARS_CoV_2_80snps.yaml")
+user_metadata = read_yaml("../user/SARS_CoV_2_70identity.yaml")
 
 
 PROJECT_NAME = user_metadata["project_name"]
@@ -64,36 +64,19 @@ if PRIMERS:
 
     include: "rules/iVar.smk"
 
-
 else:
 
     include: "rules/iVar_noPrimer.smk"
 
 
 include: "rules/consensus.smk"
-
-
 include: "rules/gather_consensus.smk"
-
-
 include: "rules/trimmomatic.smk"
-
-
 include: "rules/getCoverage.smk"
-
-
 include: "rules/generate_reads.smk"
-
-
 include: "rules/generate_alt_references.smk"
-
-
 include: "rules/snpeff.smk"
-
-
 include: "rules/freebayes.smk"
-
-
 include: "rules/variants.smk"
 
 

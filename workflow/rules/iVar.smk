@@ -60,7 +60,8 @@ rule generate_consensus:
     log:
         "logs/align_samples/{sample}/iVar/generate_consensus.log",
     shell:
-        "samtools mpileup -aa -A -Q 0 {input.bam} --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta | ivar consensus -p align_samples/{wildcards.sample}/iVar/{params} -q 20 -t 0.51 -n N "
+        "samtools mpileup -aa -A -Q 0 {input.bam} --reference align_samples/{wildcards.sample}/reference/{REFERENCE_NAME}.fasta"
+        " | ivar consensus -p align_samples/{wildcards.sample}/iVar/{params} -q 20 -t 0.51 -n N -m 10"
 
 
 rule get_depth:
@@ -150,31 +151,39 @@ rule msa_masker_iVar:
 
 rule get_masked_consensus_iVar:
     input:
-        lambda wildcards: expand(
+        consensus=lambda wildcards: expand(
             "align_samples/{sample}/iVar/consensus_aligned_{seg}.fasta",
             sample=wildcards.sample,
             seg=get_locus(REFERENCE_GB),
+        ),
+        snps=lambda wildcards: expand(
+            "align_samples/{sample}/iVar/snps.vcf", sample=wildcards.sample
         ),
     output:
         final_consensus="align_samples/{sample}/iVar/pre_{sample}_consensus.fasta",
     log:
         "logs/align_samples/{sample}/iVar/get_masked_consensus.log",
     shell:
-        "python ../workflow/scripts/get_consensus_medaka.py '{input}' {output}"
+        "python ../workflow/scripts/get_consensus_medaka.py '{input.consensus}' {output}"
 
 
 rule mask_regions_consensus_iVar:
     input:
         consensus="align_samples/{sample}/iVar/pre_{sample}_consensus.fasta",
-        tsv_file="align_samples/{sample}/iVar/snps.tsv",
     output:
         final_consensus="align_samples/{sample}/iVar/{sample}_consensus.fasta",
-        vcf_file="align_samples/{sample}/iVar/snps.vcf",
     params:
         mask_regions_parameters(software_parameters),
     log:
         "logs/align_samples/{sample}/iVar/mask_regions_consensus.log",
     shell:
         "python ../workflow/scripts/mask_regions.py {input.consensus} {output.final_consensus} {params} "
-        " && "
+
+
+rule get_vcf:
+    input:
+        tsv_file="align_samples/{sample}/iVar/snps.tsv",
+    output:
+        vcf_file="align_samples/{sample}/iVar/snps.vcf",
+    shell:
         "python ../workflow/scripts/convert_vcf.py {input.tsv_file} {output.vcf_file} "
