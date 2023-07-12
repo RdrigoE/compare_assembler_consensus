@@ -1,6 +1,7 @@
 from scripts.yaml_io import read_yaml, write_yaml
 from scripts.extract_gb_info import get_locus, get_identification_version, get_genes
 from scripts.import_user_data import Data
+from scripts.generate_snps_dict import create_sample_dict
 
 from scripts.get_software_parameters import (
     get_nanofilt_parameters,
@@ -9,24 +10,13 @@ from scripts.get_software_parameters import (
     get_snippy_parameters,
 )
 
+localization = read_yaml("./constants.yaml")
+
 
 workdir: "results/"
 
-
-software_parameters = read_yaml("../user/parameters.yaml")
-
-sample_data: Data = Data("../user/SARS_CoV_2_500snps.csv")
-(
-    paired_illumina,
-    single_illumina,
-    ont_samples,
-    sample_info_dic,
-) = sample_data.get_options()
-
-concatenated_illumina = list({**paired_illumina, **single_illumina}.keys())
-
-user_metadata = read_yaml("../user/SARS_CoV_2_500snps.yaml")
-
+user_metadata = read_yaml(localization["project"])
+software_parameters = read_yaml(localization["parameters"])
 
 PROJECT_NAME = user_metadata["project_name"]
 REFERENCE_FASTA = user_metadata["fasta_reference"]
@@ -36,10 +26,16 @@ REFERENCE_NAME = re.findall("(?<=references/)(.*?)(?=.fasta)", REFERENCE_FASTA)[
 SEGMENTS = get_locus(REFERENCE_GB)
 PRIMERS = (
     user_metadata.get("primers") if user_metadata.get("primers") is not None else False
-)
+    )
 ASSEMBLER = ["snippy", "iVar"]
 
 identification, version = get_identification_version(SEGMENTS, REFERENCE_GB)
+
+sample_info_dic = create_sample_dict(int(user_metadata["number_of_samples"]), map(lambda x: int(x), user_metadata["snps"].split(",")), SEGMENTS[0])
+concatenated_illumina = sample_info_dic.keys()
+
+print(concatenated_illumina)
+
 
 config_user = {
     "samples": sample_info_dic,
@@ -48,92 +44,40 @@ config_user = {
     "proteins": get_genes(REFERENCE_GB),
     "identification": identification,
     "version": version,
-    "sample_type": sample_data.get_sample_type(),
+    # "sample_type": sample_data.get_sample_type(),
 }
 
+SNPS = user_metadata["snps"].split(',')
 COVERAGE = user_metadata["coverage"]
 PROJECT_NAME = config_user["project"]
 FOLDER_NAME = user_metadata["folder"]
 write_yaml("../config/config.yaml", config_user)
-
+project_names = map(lambda x: f"{x}_{PROJECT_NAME}", SNPS)
 
 include: "rules/snippy.smk"
-
-
-if PRIMERS:
-
-    include: "rules/iVar.smk"
-
-else:
-
-    include: "rules/iVar_noPrimer.smk"
-
-
+include: "rules/iVar.smk"
 include: "rules/consensus.smk"
 include: "rules/gather_consensus.smk"
 include: "rules/trimmomatic.smk"
 include: "rules/getCoverage.smk"
 include: "rules/generate_reads.smk"
 include: "rules/generate_alt_references.smk"
-include: "rules/snpeff.smk"
-include: "rules/freebayes.smk"
 include: "rules/variants.smk"
 
 
 rule all:
     input:
+        expand("../user/alt_ref/{sample}.fasta", sample=concatenated_illumina),
         expand(
-            "{project}/validated_variants_{illumina_genome_assembly_software}.csv",
-            project=PROJECT_NAME,
-            illumina_genome_assembly_software=ASSEMBLER,
-        ),
-        expand(
-            "{project}/validated_minor_iSNVs_{illumina_genome_assembly_software}.csv",
-            project=PROJECT_NAME,
-            illumina_genome_assembly_software=ASSEMBLER,
-        ),
-        expand(
-            "{project}/validated_minor_iSNVs_inc_indels_{illumina_genome_assembly_software}.csv",
-            project=PROJECT_NAME,
-            illumina_genome_assembly_software=ASSEMBLER,
-        ),
-        expand(
-            "{project}/proportions_iSNVs_graph_{illumina_genome_assembly_software}.csv",
-            project=PROJECT_NAME,
-            illumina_genome_assembly_software=ASSEMBLER,
-        ),
-        expand(
-            "align_samples/{sample}/{illumina_genome_assembly_software}/sample__{sample}_freebayes_snpeff.vcf",
-            illumina_genome_assembly_software=ASSEMBLER,
-            sample=paired_illumina.keys(),
-        ),
-        expand(
-            "align_samples/{sample}/{illumina_genome_assembly_software}/sample__{sample}_freebayes.vcf",
-            illumina_genome_assembly_software=ASSEMBLER,
-            sample=paired_illumina.keys(),
-        ),
-        expand("align_samples/{sample}/snp_ready.txt", sample=paired_illumina.keys()),
-        expand(
-            "align_samples/{sample}/{illumina_genome_assembly_software}/sample__{sample}_snpeff.vcf",
-            illumina_genome_assembly_software=ASSEMBLER,
-            sample=paired_illumina.keys(),
-        ),
-        # expand("../user/alt_ref/{sample}.fasta", sample=concatenated_illumina),
-        # expand(
-        #     "../user/reads/{folder}/{sample}_{dir}.fastq.gz",
-        #     folder=FOLDER_NAME,
-        #     sample=concatenated_illumina,
-        #     dir=["1", "2"],
-        # ),
-        expand(
-            "align_samples/{sample}/{illumina_genome_assembly_software}/{sample}_consensus.fasta",
-            illumina_genome_assembly_software=ASSEMBLER,
-            sample=single_illumina.keys(),
+            "../user/reads/{folder}/{sample}_{dir}.fastq.gz",
+            folder=FOLDER_NAME,
+            sample=concatenated_illumina,
+            dir=["1", "2"],
         ),
         expand(
             "align_samples/{sample}/{illumina_genome_assembly_software}/{sample}_consensus.fasta",
             illumina_genome_assembly_software=ASSEMBLER,
-            sample=paired_illumina.keys(),
+            sample=concatenated_illumina,
         ),
         expand(
             "{project}/{assembler}_consensus.fasta",
@@ -142,7 +86,7 @@ rule all:
         ),
         expand(
             "align_samples/{sample}/iVar/snps.tsv",
-            sample=paired_illumina.keys(),
+            sample=concatenated_illumina,
         ),
-        expand("{project}/coverage_translate.csv", project=PROJECT_NAME),
-        expand("{project}/compare_consensus.csv", project=PROJECT_NAME),
+        expand("{project}/coverage_translate.csv", project=project_names),
+        expand("{project}/compare_consensus.csv", project=project_names),

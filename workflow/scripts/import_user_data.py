@@ -7,6 +7,7 @@ class Data:
     """Object with sample data information"""
 
     def __init__(self, file: str) -> None:
+        print(file)
         self.user_df: pandas.DataFrame = pandas.read_csv(file)
 
     def get_sample_names(self) -> list[str]:

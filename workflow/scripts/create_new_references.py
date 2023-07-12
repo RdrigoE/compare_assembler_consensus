@@ -1,8 +1,13 @@
+import re
+import sys
+from Bio import SeqIO, SeqFeature, SeqRecord
 import csv
 from random import random
 import numpy as np
 
 # Percentage rollete
+
+
 def get_dictionary(filename: str) -> dict[int, int]:
     with open(filename, "r", encoding="utf8") as handle:
         reader = csv.reader(handle)
@@ -70,9 +75,6 @@ def generate_rollete(positions_file, roll_times: int):
     return rollete(dictionary, roll_times)
 
 
-from Bio import SeqIO, SeqFeature, SeqRecord
-
-
 def generate_new_reference(old_reference_file, positions_change):
     with open(old_reference_file, "r", encoding="UTF8") as handler:
         old_ref = SeqIO.parse(handler, "fasta")
@@ -91,10 +93,6 @@ def generate_new_reference(old_reference_file, positions_change):
             old_ref[position] = "C"
     new_reference = "".join(old_ref)
     return new_reference
-
-
-import sys
-import re
 
 
 def main():
