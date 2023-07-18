@@ -1,7 +1,7 @@
 identification: MN908947
 locus:
 - SARS_CoV_2
-project: SARS_CoV_2_500snps
+project: SARS_CoV_2
 proteins:
 - orf1ab
 - S
@@ -14,6 +14,10 @@ proteins:
 - N
 - ORF10
 samples:
+  sample_10__0snps_SARS_CoV_2:
+    fastq1: sample_10__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_10__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_10__100snps_SARS_CoV_2:
     fastq1: sample_10__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_10__100snps_SARS_CoV_2_2.fastq.gz
@@ -53,6 +57,10 @@ samples:
   sample_10__50snps_SARS_CoV_2:
     fastq1: sample_10__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_10__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_11__0snps_SARS_CoV_2:
+    fastq1: sample_11__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_11__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_11__100snps_SARS_CoV_2:
     fastq1: sample_11__100snps_SARS_CoV_2_1.fastq.gz
@@ -94,6 +102,10 @@ samples:
     fastq1: sample_11__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_11__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_12__0snps_SARS_CoV_2:
+    fastq1: sample_12__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_12__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_12__100snps_SARS_CoV_2:
     fastq1: sample_12__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_12__100snps_SARS_CoV_2_2.fastq.gz
@@ -133,6 +145,10 @@ samples:
   sample_12__50snps_SARS_CoV_2:
     fastq1: sample_12__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_12__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_13__0snps_SARS_CoV_2:
+    fastq1: sample_13__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_13__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_13__100snps_SARS_CoV_2:
     fastq1: sample_13__100snps_SARS_CoV_2_1.fastq.gz
@@ -174,6 +190,10 @@ samples:
     fastq1: sample_13__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_13__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_14__0snps_SARS_CoV_2:
+    fastq1: sample_14__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_14__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_14__100snps_SARS_CoV_2:
     fastq1: sample_14__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_14__100snps_SARS_CoV_2_2.fastq.gz
@@ -213,6 +233,10 @@ samples:
   sample_14__50snps_SARS_CoV_2:
     fastq1: sample_14__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_14__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_15__0snps_SARS_CoV_2:
+    fastq1: sample_15__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_15__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_15__100snps_SARS_CoV_2:
     fastq1: sample_15__100snps_SARS_CoV_2_1.fastq.gz
@@ -254,6 +278,10 @@ samples:
     fastq1: sample_15__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_15__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_16__0snps_SARS_CoV_2:
+    fastq1: sample_16__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_16__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_16__100snps_SARS_CoV_2:
     fastq1: sample_16__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_16__100snps_SARS_CoV_2_2.fastq.gz
@@ -293,6 +321,10 @@ samples:
   sample_16__50snps_SARS_CoV_2:
     fastq1: sample_16__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_16__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_17__0snps_SARS_CoV_2:
+    fastq1: sample_17__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_17__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_17__100snps_SARS_CoV_2:
     fastq1: sample_17__100snps_SARS_CoV_2_1.fastq.gz
@@ -334,6 +366,10 @@ samples:
     fastq1: sample_17__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_17__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_18__0snps_SARS_CoV_2:
+    fastq1: sample_18__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_18__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_18__100snps_SARS_CoV_2:
     fastq1: sample_18__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_18__100snps_SARS_CoV_2_2.fastq.gz
@@ -373,6 +409,10 @@ samples:
   sample_18__50snps_SARS_CoV_2:
     fastq1: sample_18__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_18__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_19__0snps_SARS_CoV_2:
+    fastq1: sample_19__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_19__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_19__100snps_SARS_CoV_2:
     fastq1: sample_19__100snps_SARS_CoV_2_1.fastq.gz
@@ -414,6 +454,10 @@ samples:
     fastq1: sample_19__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_19__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_1__0snps_SARS_CoV_2:
+    fastq1: sample_1__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_1__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_1__100snps_SARS_CoV_2:
     fastq1: sample_1__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_1__100snps_SARS_CoV_2_2.fastq.gz
@@ -453,6 +497,10 @@ samples:
   sample_1__50snps_SARS_CoV_2:
     fastq1: sample_1__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_1__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_20__0snps_SARS_CoV_2:
+    fastq1: sample_20__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_20__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_20__100snps_SARS_CoV_2:
     fastq1: sample_20__100snps_SARS_CoV_2_1.fastq.gz
@@ -494,6 +542,10 @@ samples:
     fastq1: sample_20__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_20__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_21__0snps_SARS_CoV_2:
+    fastq1: sample_21__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_21__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_21__100snps_SARS_CoV_2:
     fastq1: sample_21__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_21__100snps_SARS_CoV_2_2.fastq.gz
@@ -533,6 +585,10 @@ samples:
   sample_21__50snps_SARS_CoV_2:
     fastq1: sample_21__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_21__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_22__0snps_SARS_CoV_2:
+    fastq1: sample_22__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_22__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_22__100snps_SARS_CoV_2:
     fastq1: sample_22__100snps_SARS_CoV_2_1.fastq.gz
@@ -574,6 +630,10 @@ samples:
     fastq1: sample_22__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_22__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_23__0snps_SARS_CoV_2:
+    fastq1: sample_23__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_23__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_23__100snps_SARS_CoV_2:
     fastq1: sample_23__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_23__100snps_SARS_CoV_2_2.fastq.gz
@@ -613,6 +673,10 @@ samples:
   sample_23__50snps_SARS_CoV_2:
     fastq1: sample_23__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_23__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_24__0snps_SARS_CoV_2:
+    fastq1: sample_24__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_24__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_24__100snps_SARS_CoV_2:
     fastq1: sample_24__100snps_SARS_CoV_2_1.fastq.gz
@@ -654,6 +718,10 @@ samples:
     fastq1: sample_24__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_24__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_25__0snps_SARS_CoV_2:
+    fastq1: sample_25__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_25__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_25__100snps_SARS_CoV_2:
     fastq1: sample_25__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_25__100snps_SARS_CoV_2_2.fastq.gz
@@ -693,6 +761,10 @@ samples:
   sample_25__50snps_SARS_CoV_2:
     fastq1: sample_25__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_25__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_26__0snps_SARS_CoV_2:
+    fastq1: sample_26__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_26__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_26__100snps_SARS_CoV_2:
     fastq1: sample_26__100snps_SARS_CoV_2_1.fastq.gz
@@ -734,6 +806,10 @@ samples:
     fastq1: sample_26__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_26__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_27__0snps_SARS_CoV_2:
+    fastq1: sample_27__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_27__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_27__100snps_SARS_CoV_2:
     fastq1: sample_27__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_27__100snps_SARS_CoV_2_2.fastq.gz
@@ -773,6 +849,10 @@ samples:
   sample_27__50snps_SARS_CoV_2:
     fastq1: sample_27__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_27__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_28__0snps_SARS_CoV_2:
+    fastq1: sample_28__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_28__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_28__100snps_SARS_CoV_2:
     fastq1: sample_28__100snps_SARS_CoV_2_1.fastq.gz
@@ -814,6 +894,10 @@ samples:
     fastq1: sample_28__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_28__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_29__0snps_SARS_CoV_2:
+    fastq1: sample_29__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_29__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_29__100snps_SARS_CoV_2:
     fastq1: sample_29__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_29__100snps_SARS_CoV_2_2.fastq.gz
@@ -853,6 +937,10 @@ samples:
   sample_29__50snps_SARS_CoV_2:
     fastq1: sample_29__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_29__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_2__0snps_SARS_CoV_2:
+    fastq1: sample_2__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_2__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_2__100snps_SARS_CoV_2:
     fastq1: sample_2__100snps_SARS_CoV_2_1.fastq.gz
@@ -894,6 +982,10 @@ samples:
     fastq1: sample_2__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_2__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_30__0snps_SARS_CoV_2:
+    fastq1: sample_30__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_30__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_30__100snps_SARS_CoV_2:
     fastq1: sample_30__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_30__100snps_SARS_CoV_2_2.fastq.gz
@@ -933,6 +1025,10 @@ samples:
   sample_30__50snps_SARS_CoV_2:
     fastq1: sample_30__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_30__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_3__0snps_SARS_CoV_2:
+    fastq1: sample_3__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_3__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_3__100snps_SARS_CoV_2:
     fastq1: sample_3__100snps_SARS_CoV_2_1.fastq.gz
@@ -974,6 +1070,10 @@ samples:
     fastq1: sample_3__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_3__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_4__0snps_SARS_CoV_2:
+    fastq1: sample_4__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_4__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_4__100snps_SARS_CoV_2:
     fastq1: sample_4__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_4__100snps_SARS_CoV_2_2.fastq.gz
@@ -1013,6 +1113,10 @@ samples:
   sample_4__50snps_SARS_CoV_2:
     fastq1: sample_4__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_4__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_5__0snps_SARS_CoV_2:
+    fastq1: sample_5__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_5__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_5__100snps_SARS_CoV_2:
     fastq1: sample_5__100snps_SARS_CoV_2_1.fastq.gz
@@ -1054,6 +1158,10 @@ samples:
     fastq1: sample_5__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_5__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_6__0snps_SARS_CoV_2:
+    fastq1: sample_6__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_6__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_6__100snps_SARS_CoV_2:
     fastq1: sample_6__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_6__100snps_SARS_CoV_2_2.fastq.gz
@@ -1093,6 +1201,10 @@ samples:
   sample_6__50snps_SARS_CoV_2:
     fastq1: sample_6__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_6__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_7__0snps_SARS_CoV_2:
+    fastq1: sample_7__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_7__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_7__100snps_SARS_CoV_2:
     fastq1: sample_7__100snps_SARS_CoV_2_1.fastq.gz
@@ -1134,6 +1246,10 @@ samples:
     fastq1: sample_7__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_7__50snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
+  sample_8__0snps_SARS_CoV_2:
+    fastq1: sample_8__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_8__0snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
   sample_8__100snps_SARS_CoV_2:
     fastq1: sample_8__100snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_8__100snps_SARS_CoV_2_2.fastq.gz
@@ -1173,6 +1289,10 @@ samples:
   sample_8__50snps_SARS_CoV_2:
     fastq1: sample_8__50snps_SARS_CoV_2_1.fastq.gz
     fastq2: sample_8__50snps_SARS_CoV_2_2.fastq.gz
+    tech: illumina
+  sample_9__0snps_SARS_CoV_2:
+    fastq1: sample_9__0snps_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_9__0snps_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_9__100snps_SARS_CoV_2:
     fastq1: sample_9__100snps_SARS_CoV_2_1.fastq.gz

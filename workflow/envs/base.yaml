@@ -1,9 +1,8 @@
 channels:
-  - defaults
   - bioconda
   - conda-forge
 dependencies:
-  - ivar=1.4.2
-  - bedtools=2.31.0
-  - bwa=0.7.17
+  - python =3.10
   - biopython =1.79
+  - pyyaml =6.0
+  - pandas =1.4.3

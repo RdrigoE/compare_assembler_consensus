@@ -74,9 +74,10 @@ def get_coverage(filename: str, n_locus: int):
         )[0]
         for i in csv_reader:
             coverage_list.append(i)
+        print(coverage_list)
         coverage_list = coverage_list[-1][-n_locus:]
         coverage_list.insert(0, sample_name)
-        csvfile.close()
+
     return coverage_list
 
 

@@ -1,0 +1,10 @@
+working: ../results/
+project: ../user/sars_cov_2.yaml 
+config_file: ../config/config.yaml
+parameters: ../user/parameters.yaml
+get_coverage: ../workflow/software/getCoverage/getCoverage.py
+references: ../user/references/
+rules: ../workflow/rules/
+envs: ../envs/
+scripts: ../workflow/scripts/
+threads: ../config/threads.yaml
