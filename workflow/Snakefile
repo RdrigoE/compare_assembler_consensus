@@ -96,3 +96,8 @@ rule all:
             project=project_names,
             assembler=["snippy", "iVar"],
         ),
+        "snps_MM_stats.png",
+        "snps_acc_stats.png",
+        "snps_Ns_stats.png" 
+
+

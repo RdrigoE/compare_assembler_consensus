@@ -6,3 +6,5 @@ dependencies:
   - python =3.10
   - biopython =1.79
   - mafft =7.313
+  - matplotlib
+  - scipy
