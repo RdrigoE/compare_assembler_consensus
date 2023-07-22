@@ -1,6 +1,6 @@
 from scripts.yaml_io import read_yaml, write_yaml
 from scripts.extract_gb_info import get_locus, get_identification_version, get_genes
-from scripts.generate_snps_dict import create_sample_dict
+from scripts.generate_identity_dict import create_sample_dict
 
 from scripts.get_software_parameters import (
     get_nanofilt_parameters,
@@ -32,7 +32,7 @@ identification, version = get_identification_version(SEGMENTS, REFERENCE_GB)
 
 sample_info_dic = create_sample_dict(
     int(user_metadata["number_of_samples"]),
-    map(lambda x: int(x), user_metadata["snps"].split(",")),
+    map(lambda x: int(x), user_metadata["identity"].split(",")),
     SEGMENTS[0],
 )
 concatenated_illumina = sample_info_dic.keys()
@@ -47,22 +47,23 @@ config_user = {
     # "sample_type": sample_data.get_sample_type(),
 }
 
-SNPS = user_metadata["snps"].split(",")
+IDENTITY = user_metadata["identity"].split(",")
 COVERAGE = user_metadata["coverage"]
 FOLDER_NAME = config_user["project"]
 PROJECT_NAME = config_user["project"]
 write_yaml("../config/config.yaml", config_user)
-project_names = map(lambda x: f"{x}snps_{PROJECT_NAME}", SNPS)
+project_names = map(lambda x: f"{x}identity_{PROJECT_NAME}", IDENTITY)
 
 PRIMER_FASTA = (
     user_metadata.get("primers_fasta")
     if user_metadata.get("primers_fasta") is not None
     else False
 )
-PRIMER_FASTA = f"../user/primers/{user_metadata['primers_fasta']}" if PRIMER_FASTA else False
+PRIMER_FASTA = (
+    f"../user/primers/{user_metadata['primers_fasta']}" if PRIMER_FASTA else False
+)
 ALT_POSITIONS = user_metadata["alt_positions"]
 
- 
 
 include: "rules/snippy.smk"
 include: "rules/iVar.smk"
@@ -96,3 +97,7 @@ rule all:
             project=project_names,
             assembler=["snippy", "iVar"],
         ),
+        "identity_MM_stats.png",
+        "identity_acc_stats.png",
+        "identity_Ns_stats.png" 
+

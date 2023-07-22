@@ -1,11 +1,10 @@
-from operator import pos
+from random import choices as random_choices
 import re
 import sys
 from typing import NamedTuple, TypedDict
-from Bio import SeqIO, SeqFeature, SeqRecord
+from Bio import SeqIO
 import csv
 from random import random
-import numpy as np
 
 # Percentage rollete
 
@@ -105,18 +104,26 @@ def choose_alternative(alt_nucleotides: AltTimes) -> str:
     for key in percentage:
         if percentage[key] >= choice:
             return key
-    return "A"
+    raise ValueError("This is not supose to happen")
 
 
-def generate_new_reference(old_reference_file, positions_change, alt_dict: dict[int, AltValues]):
+def generate_new_reference(old_reference_file, positions_change ):
     with open(old_reference_file, "r", encoding="UTF8") as handler:
         old_ref = SeqIO.parse(handler, "fasta")
         old_ref = list(old_ref)[0].seq
         old_ref = str(old_ref)
         old_ref = [*old_ref]
     for position in positions_change:
-        old_ref[position] = choose_alternative(alt_dict[position].nucleotides)
+        if old_ref[position] == "A":
+            old_ref[position] = "T"
+        elif old_ref[position] == "T":
+            old_ref[position] = "A"
+        elif old_ref[position] == "C":
+            old_ref[position] = "G"
+        elif old_ref[position] == "G":
+            old_ref[position] = "C"
     new_reference = "".join(old_ref)
+
     return new_reference
 
 
@@ -126,14 +133,18 @@ def get_ref_id(ref: str):
 
 
 def main():
-    output_file = sys.argv[3]
-    number_of_snps = int(re.findall("(?<=__)(.*?)(?=snps)", output_file)[0])
-
     positions_file = sys.argv[1]
     original_reference = sys.argv[2]
+    output_file = sys.argv[3]
+    identity = int(re.findall("(?<=__)(.*?)(?=identity)", output_file)[0])
     dictionary = get_dictionary(positions_file)
-    positions = generate_rollete(dictionary.copy(), number_of_snps)
-    new_ref = generate_new_reference(original_reference, positions, dictionary)
+    size_of_spike_protein = 3821
+    positions_of_spike = list(range(21563, 25384))
+    number_of_changes = size_of_spike_protein - int(
+        size_of_spike_protein * (identity / 100)
+    )
+    positions = random_choices(positions_of_spike, k=number_of_changes)
+    new_ref = generate_new_reference(original_reference, positions)
     reference_id = ">" + \
         get_ref_id(original_reference) + " randomly changed complete genome\n"
     with open(output_file, "w", encoding="utf-8") as new_file:

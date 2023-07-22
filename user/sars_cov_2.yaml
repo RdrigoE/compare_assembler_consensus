@@ -2,7 +2,7 @@ coverage: 1000
 fasta_reference: ../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.fasta
 gb_reference: ../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.gbk
 project_name: SARS_CoV_2
-snps: 0,10,20,30,40,50,100,200,300,400,500
-number_of_samples: 30
+identity: 100,95,90,85,80,77,70,50
+number_of_samples: 2
 primers_fasta: sars_cov_2_artic_4_1.fasta
 alt_positions: ../user/input_new_references/positions_sars_cov_2.tsv

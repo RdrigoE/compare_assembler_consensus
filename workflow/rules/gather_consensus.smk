@@ -61,3 +61,17 @@ rule compare_consensus_2:
         "{project}/done.csv",
     shell:
         "touch done.csv"
+
+
+rule get_plots:
+    input:
+        expand("{project}/compare_consensus.csv", project=project_names),
+    output:
+        mm =  "identity_MM_stats.png",
+        acc = "identity_acc_stats.png",
+        ns =  "identity_Ns_stats.png", 
+    conda:
+          "../envs/analyse.yaml"
+    shell:
+          "python ./../workflow/scripts/get_snps_plots.py './' "
+
