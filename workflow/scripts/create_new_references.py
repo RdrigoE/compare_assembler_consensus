@@ -65,7 +65,6 @@ def rollete(data: dict[int, AltValues], roll_times: int):
     current_percentage: float = 0
     total_count = sum(map(lambda x: x.times, data.values()))
     for _ in range(roll_times):
-        # print(_)
         for key, value in data.items():
             current_percentage += value.times / total_count
             percentage_list.append(current_percentage)
