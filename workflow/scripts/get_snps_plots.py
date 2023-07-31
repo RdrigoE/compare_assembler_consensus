@@ -59,6 +59,11 @@ def get_mean(data: list[list[str]], idx) -> int:
     return sum(list(map(lambda x: int(x[idx]), data))) // len(data)
 
 
+def get_median(data: list[list[str]], idx) -> int:
+    new_data = sorted(list(map(lambda x: int(x[idx]), data)))
+    return new_data[len(data)//2]
+
+
 def get_all(data: list[list[str]], idx) -> list[int]:
     return list(map(lambda x: int(x[idx]), data))
 
@@ -145,28 +150,78 @@ def get_Ns_MM(file_list: list[str]) -> list[dict[int, dict[str, int]]]:
     return [snippy_to_return, ivar_to_return]
 
 
+def get_Ns_MM_median(file_list: list[str]) -> list[dict[int, dict[str, int]]]:
+    snippy_d: dict[int, dict[str, int]] = OrderedDict()
+    ivar_d: dict[int, dict[str, int]] = OrderedDict()
+    ids = []
+    for file_name in file_list:
+
+        for idx, char in enumerate(file_name):
+            if char.isalpha():
+                stop_at = idx
+                break
+
+        dict_id = int(file_name[:stop_at])
+        snippy, ivar = get_lines_snps(file_name)
+        # snippy info
+        snippy_Ns = get_median(snippy, 4)
+        snippy_MM = get_median(snippy, 3)
+        snippy_acc = get_median(snippy, 6)
+        # ivar info
+        ivar_Ns = get_median(ivar, 4)
+        ivar_MM = get_median(ivar, 3)
+        ivar_acc = get_median(ivar, 6)
+        snippy_d[dict_id] = {
+            "Ns": snippy_Ns,
+            "MM": snippy_MM,
+            "acc": snippy_acc,
+        }
+
+        ivar_d[dict_id] = {"Ns": ivar_Ns, "MM": ivar_MM, "acc": ivar_acc}
+        ids.append(dict_id)
+    ids.sort(reverse=True)
+    snippy_to_return: dict[int, dict[str, int]] = {}
+    ivar_to_return: dict[int, dict[str, int]] = {}
+    for item in ids:
+        snippy_to_return[item] = snippy_d[item]
+        ivar_to_return[item] = ivar_d[item]
+    return [snippy_to_return, ivar_to_return]
+
+
 if __name__ == "__main__":
     current_directory = Path("./")
     files = find_files_to_analyse(current_directory)
-    print("files", files)
-    snippy_dict, ivar_dict = get_Ns_MM(files)
-    print(snippy_dict, ivar_dict)
-    # [(number of snps, {'Ns': int, 'MM': int}), ]
+    snippy_dict_mean, ivar_dict_mean = get_Ns_MM(files)
+    snippy_dict_median, ivar_dict_median = get_Ns_MM_median(files)
     snippy_full, ivar_full = full_Ns_MM(files)
-    # [(number of snps, {'Ns': int * 30, 'MM': int * 30}), ]
+
     for parameter in ("Ns", "acc", "MM"):
         plot_line(
-            labels=list(ivar_dict.keys()),
+            labels=list(ivar_dict_mean.keys()),
             snippy=list(
-                map(lambda x: x.get(parameter, 0), snippy_dict.values())),
-            ivar=list(map(lambda x: x.get(parameter, 0), ivar_dict.values())),
+                map(lambda x: x.get(parameter, 0), snippy_dict_mean.values())),
+            ivar=list(map(lambda x: x.get(parameter, 0),
+                      ivar_dict_mean.values())),
+            title="Mean",
             parameter=parameter,
             condition='snps',
             dashed=True,
             stats=True,
         )
-        # scatter_plot(input_snippy=snippy_full,
-        #              input_ivar=ivar_full,
-        #              parameter=parameter,
-        #              condition='snps',
-        #              )
+        plot_line(
+            labels=list(ivar_dict_median.keys()),
+            snippy=list(
+                map(lambda x: x.get(parameter, 0), snippy_dict_median.values())),
+            ivar=list(map(lambda x: x.get(parameter, 0),
+                      ivar_dict_median.values())),
+            title="Median",
+            parameter=parameter,
+            condition='snps',
+            dashed=True,
+            stats=True,
+        )
+        scatter_plot(input_snippy=snippy_full,
+                     input_ivar=ivar_full,
+                     parameter=parameter,
+                     condition='snps',
+                     )

@@ -19,6 +19,7 @@ def plot_line(labels: list[int],
               ivar: list[int],
               parameter: Union[Literal["acc"], Literal["Ns"], Literal["MM"]],
               condition: Union[Literal["snps"], Literal["identity"]],
+              title: str,
               dashed: bool = False,
               xlim: Union[Xlim, None] = None,
               stats: bool = False
@@ -31,7 +32,7 @@ def plot_line(labels: list[int],
     line_thikness = 2
     colors = ["#304D63", "#ED8975"]
 
-    plt.title(f"Mean {keys[parameter]}", pad=15, fontdict=fonttitle)
+    plt.title(f"{title} {keys[parameter]}", pad=15, fontdict=fonttitle)
     if xlim:
         plt.xlim(xlim.left, xlim.right)
     plt.plot(
@@ -64,7 +65,7 @@ def plot_line(labels: list[int],
     elif condition == "identity":
         plt.xlabel("Identity frequency (%)", labelpad=10, fontdict=fontlabel)
 
-    plt.ylabel(f"Mean {keys[parameter]} across 30 samples",
+    plt.ylabel(f"{title} {keys[parameter]} across 30 samples",
                labelpad=10, fontdict=fontlabel)
     plt.xscale("linear")
     plt.legend()
@@ -75,9 +76,9 @@ def plot_line(labels: list[int],
             plt.text(
                 x=item, y=max(snippy[idx], ivar[idx]), s=significance_dict[item]
             )
-        plt.savefig(f"{condition}_{parameter}_stats.png", dpi=300)
+        plt.savefig(f"{title}_{condition}_{parameter}_stats.png", dpi=300)
     else:
-        plt.savefig(f"{condition}_{parameter}.png", dpi=300)
+        plt.savefig(f"{title}_{condition}_{parameter}.png", dpi=300)
     plt.clf()
 
 
