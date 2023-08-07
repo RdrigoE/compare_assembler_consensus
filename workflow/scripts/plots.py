@@ -102,8 +102,11 @@ def scatter_plot(
             global_x.append(key)
             snippy_y.append(value)
             ivar_y.append(input_ivar[key][parameter][idx])
-    plt.scatter(x=global_x, y=snippy_y, label="snippy", marker="o")
-    plt.scatter(x=global_x, y=ivar_y, label="iVar", marker="v")
+
+    plt.scatter(x=global_x, y=snippy_y, label="snippy",
+                marker="o", color="#304D63")
+    plt.scatter(x=global_x, y=ivar_y, label="iVar",
+                marker="v", color="#ED8975")
     plt.xticks(rotation=90)
     plt.legend()
 
@@ -113,6 +116,7 @@ def scatter_plot(
         plt.xlabel("Identity frequency (%)", labelpad=10, fontdict=fontlabel)
     plt.ylabel(f"{keys[parameter]} per sample",
                labelpad=10, fontdict=fontlabel)
-    plt.title(f"Number of {keys[parameter]}", fontdict=fonttitle)
+    plt.title(f"Number of {keys[parameter]}", fontdict=fonttitle, pad=15)
+    plt.tight_layout()
     plt.savefig(f"scatter_{condition}_{parameter}.png", dpi=300)
     plt.clf()
