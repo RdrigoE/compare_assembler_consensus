@@ -107,7 +107,6 @@ def scatter_plot(
                 marker="o", color="#304D63")
     plt.scatter(x=global_x, y=ivar_y, label="iVar",
                 marker="v", color="#ED8975")
-    plt.xticks(rotation=90)
     plt.legend()
 
     if condition == "snps":
