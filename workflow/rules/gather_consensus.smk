@@ -66,9 +66,15 @@ rule get_plots:
     input:
         expand("{project}/compare_consensus.csv", project=project_names),
     output:
-        mm =  "snps_MM_stats.png",
-        acc = "snps_acc_stats.png",
-        ns =  "snps_Ns_stats.png", 
+        "Mean_snps_acc_stats.png",
+        "Mean_snps_MM_stats.png",
+        "Mean_snps_Ns_stats.png",
+        "Median_snps_acc_stats.png",
+        "Median_snps_MM_stats.png",
+        "Median_snps_Ns_stats.png",
+        "scatter_snps_acc.png",
+        "scatter_snps_MM.png",
+        "scatter_snps_Ns.png",
     conda:
           "../envs/analyse.yaml"
     shell:

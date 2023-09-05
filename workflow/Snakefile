@@ -105,4 +105,3 @@ rule all:
         "scatter_snps_acc.png",
         "scatter_snps_MM.png",
         "scatter_snps_Ns.png",
-        )
