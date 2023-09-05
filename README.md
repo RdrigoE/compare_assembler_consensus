@@ -26,7 +26,7 @@ Position    Occurences  A-occurences T-occurences C-occurences G-occurences
 If there is a mutation in the first 3 positions the alternative nucleotide will be T in the first and A in the second and third.
 In the last position most of the time it will be G, but sometimes it will be A
 
-# Runnnig
+# Runnig
 ```
 snakemake -c 8 --use-conda
 ``` 
