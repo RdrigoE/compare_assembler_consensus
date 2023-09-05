@@ -107,7 +107,7 @@ def choose_alternative(alt_nucleotides: AltTimes) -> str:
     raise ValueError("This is not supose to happen")
 
 
-def generate_new_reference(old_reference_file, positions_change ):
+def generate_new_reference(old_reference_file, positions_change):
     with open(old_reference_file, "r", encoding="UTF8") as handler:
         old_ref = SeqIO.parse(handler, "fasta")
         old_ref = list(old_ref)[0].seq
@@ -133,11 +133,9 @@ def get_ref_id(ref: str):
 
 
 def main():
-    positions_file = sys.argv[1]
-    original_reference = sys.argv[2]
-    output_file = sys.argv[3]
+    original_reference = sys.argv[1]
+    output_file = sys.argv[2]
     identity = int(re.findall("(?<=__)(.*?)(?=identity)", output_file)[0])
-    dictionary = get_dictionary(positions_file)
     size_of_spike_protein = 3821
     positions_of_spike = list(range(21563, 25384))
     number_of_changes = size_of_spike_protein - int(

@@ -62,7 +62,6 @@ PRIMER_FASTA = (
 PRIMER_FASTA = (
     f"../user/primers/{user_metadata['primers_fasta']}" if PRIMER_FASTA else False
 )
-ALT_POSITIONS = user_metadata["alt_positions"]
 
 
 include: "rules/snippy.smk"
