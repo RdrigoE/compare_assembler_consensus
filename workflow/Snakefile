@@ -97,7 +97,13 @@ rule all:
             project=project_names,
             assembler=["snippy", "iVar"],
         ),
-        "identity_MM_stats.png",
-        "identity_acc_stats.png",
-        "identity_Ns_stats.png" 
+        "Mean_identity_acc_stats.png",
+        "Mean_identity_MM_stats.png",
+        "Mean_identity_Ns_stats.png",
+        "Median_identity_acc_stats.png",
+        "Median_identity_MM_stats.png",
+        "Median_identity_Ns_stats.png",
+        "scatter_identity_acc.png",
+        "scatter_identity_MM.png",
+        "scatter_identity_Ns.png"
 

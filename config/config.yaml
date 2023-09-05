@@ -26,9 +26,9 @@ samples:
     fastq1: sample_1__70identity_SARS_CoV_2_1.fastq.gz
     fastq2: sample_1__70identity_SARS_CoV_2_2.fastq.gz
     tech: illumina
-  sample_1__77identity_SARS_CoV_2:
-    fastq1: sample_1__77identity_SARS_CoV_2_1.fastq.gz
-    fastq2: sample_1__77identity_SARS_CoV_2_2.fastq.gz
+  sample_1__75identity_SARS_CoV_2:
+    fastq1: sample_1__75identity_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_1__75identity_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_1__80identity_SARS_CoV_2:
     fastq1: sample_1__80identity_SARS_CoV_2_1.fastq.gz
@@ -58,9 +58,9 @@ samples:
     fastq1: sample_2__70identity_SARS_CoV_2_1.fastq.gz
     fastq2: sample_2__70identity_SARS_CoV_2_2.fastq.gz
     tech: illumina
-  sample_2__77identity_SARS_CoV_2:
-    fastq1: sample_2__77identity_SARS_CoV_2_1.fastq.gz
-    fastq2: sample_2__77identity_SARS_CoV_2_2.fastq.gz
+  sample_2__75identity_SARS_CoV_2:
+    fastq1: sample_2__75identity_SARS_CoV_2_1.fastq.gz
+    fastq2: sample_2__75identity_SARS_CoV_2_2.fastq.gz
     tech: illumina
   sample_2__80identity_SARS_CoV_2:
     fastq1: sample_2__80identity_SARS_CoV_2_1.fastq.gz
