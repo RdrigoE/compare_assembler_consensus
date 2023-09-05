@@ -1,7 +1,0 @@
-channels:
-  - defaults
-  - conda-forge
-  - bioconda
-dependencies:
-  - medaka =1.4.4
-  - bcftools = 1.12

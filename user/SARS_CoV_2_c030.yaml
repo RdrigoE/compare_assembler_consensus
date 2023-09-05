@@ -1,8 +1,0 @@
-project_name: sars_dataset_30_alt
-fasta_reference: ../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.fasta
-gb_reference: ../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.gbk
-primers: ../user/primers/sars_cov_2.bed
-folder: 30_coverage_alt
-coverage: 30
-gff_reference: ../user/references/SARS_CoV_2_COVID_19_Wuhan_Hu_1_MN908947.gff3
-create_fastq_ref: ../user/alt_ref/SARS_COV_REF_ALT.fasta
